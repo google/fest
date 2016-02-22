@@ -26,7 +26,11 @@ import org.fest.swing.edt.GuiTask;
 /**
  * Activates an AWT {@code Window}. "Activate" means that the given window is brought to the front and then gets the
  * keyboard focus.
- * 
+ * <p>
+ * Note <a href="http://java.sun.com/docs/books/tutorial/uiswing/misc/focus.html">How to Use the Focus Subsystem</a>
+ * states, “There is no foolproof way, across all platforms, to ensure that a window gains the focus.”
+ * This implementation does its best.
+ *
  * @author Alex Ruiz
  */
 class ActivateWindowTask {
@@ -36,7 +40,7 @@ class ActivateWindowTask {
       @Override
       protected void executeInEDT() {
         w.toFront();
-        w.requestFocusInWindow();
+        w.requestFocus();
       }
     });
   }
