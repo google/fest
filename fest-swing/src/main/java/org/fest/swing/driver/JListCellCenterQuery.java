@@ -16,8 +16,6 @@ package org.fest.swing.driver;
 
 import static org.fest.swing.awt.AWT.centerOf;
 import static org.fest.swing.awt.AWT.centerOfVisibleRect;
-import static org.fest.swing.awt.AWT.translate;
-import static org.fest.util.Preconditions.checkNotNull;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -40,9 +38,8 @@ final class JListCellCenterQuery {
   @RunsInCurrentThread
   static @Nonnull Point cellCenter(@Nonnull JList list, @Nonnull Rectangle cellBounds) {
     Point cellCenter = centerOf(cellBounds);
-    Point translated = checkNotNull(translate(list, cellCenter.x, cellCenter.y));
     int listVisibleWidth = list.getVisibleRect().width;
-    if (translated.x < listVisibleWidth) {
+    if (cellCenter.x < listVisibleWidth) {
       return cellCenter;
     }
     Point listCenter = centerOfVisibleRect(list);
