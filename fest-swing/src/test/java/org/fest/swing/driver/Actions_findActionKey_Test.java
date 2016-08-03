@@ -23,10 +23,10 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 
 import org.fest.swing.exception.ActionFailedException;
-import org.fest.test.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link Actions#findActionKey(String, ActionMap)}.
@@ -34,8 +34,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class Actions_findActionKey_Test {
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private ActionMap map;
   private Action action;
@@ -63,7 +63,8 @@ public class Actions_findActionKey_Test {
   @Test
   public void should_throw_error_if_key_not_found() {
     when(action.getValue(NAME)).thenReturn("name");
-    thrown.expect(ActionFailedException.class, "The action 'someName' is not available, available actions:['key']");
+    thrown.expect(ActionFailedException.class);
+    thrown.expectMessage("The action 'someName' is not available, available actions:['key']");
     Object found = Actions.findActionKey("someName", map);
     assertThat(found).isEqualTo("key");
   }

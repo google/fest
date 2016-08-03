@@ -18,10 +18,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.fest.test.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link TestTerminator#terminateTests()}.
@@ -29,8 +29,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class TestTerminator_terminateTests_Test {
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private ThreadsSource threadsSource;
   private FrameDisposer frameDisposer;
@@ -66,7 +66,8 @@ public class TestTerminator_terminateTests_Test {
   }
 
   private void terminateTestsAndCheckExpectedException() {
-    thrown.expect(RuntimeException.class, "User aborted FEST-Swing tests");
+    thrown.expect(RuntimeException.class);
+    thrown.expectMessage("User aborted FEST-Swing tests");
     terminator.terminateTests();
   }
 }

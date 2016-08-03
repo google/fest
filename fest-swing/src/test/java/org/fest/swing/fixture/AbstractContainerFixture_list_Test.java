@@ -17,7 +17,6 @@ package org.fest.swing.fixture;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.swing.edt.GuiActionRunner.execute;
 import static org.fest.swing.test.core.NeverMatchingComponentMatcher.neverMatches;
-import static org.fest.test.ExpectedException.none;
 import static org.fest.util.Arrays.array;
 
 import javax.annotation.Nonnull;
@@ -28,9 +27,9 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.test.core.RobotBasedTestCase;
 import org.fest.swing.test.swing.TestWindow;
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests lookups of {@code JList}s in {@link AbstractContainerFixture}.
@@ -38,8 +37,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class AbstractContainerFixture_list_Test extends RobotBasedTestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private FakeContainerFixture fixture;
   private MyWindow window;
@@ -60,8 +59,8 @@ public class AbstractContainerFixture_list_Test extends RobotBasedTestCase {
   @Test
   public void should_fail_if_visible_JList_not_found_by_name() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher",
-        "name='myList', type=javax.swing.JList, requireShowing=true");
+    thrown.expectMessage("Unable to find component using matcher");
+    thrown.expectMessage("name='myList', type=javax.swing.JList, requireShowing=true");
     fixture.list("myList");
   }
 
@@ -75,8 +74,8 @@ public class AbstractContainerFixture_list_Test extends RobotBasedTestCase {
   @Test
   public void should_fail_if_visible_JList_not_found_by_type() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher",
-        "type=javax.swing.JList, requireShowing=true");
+    thrown.expectMessage("Unable to find component using matcher");
+    thrown.expectMessage("type=javax.swing.JList, requireShowing=true");
     fixture.list();
   }
 
@@ -95,7 +94,7 @@ public class AbstractContainerFixture_list_Test extends RobotBasedTestCase {
   @Test
   public void should_fail_if_visible_JList_not_found_by_Matcher() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher");
+    thrown.expectMessage("Unable to find component using matcher");
     fixture.list(neverMatches(JList.class));
   }
 

@@ -16,14 +16,13 @@ package org.fest.swing.fixture;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.swing.timing.Timeout.timeout;
-import static org.fest.test.ExpectedException.none;
 
 import org.fest.swing.exception.WaitTimedOutError;
 import org.fest.swing.test.core.RobotBasedTestCase;
 import org.fest.swing.test.swing.JOptionPaneLauncherWindow;
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests lookups of {@code JOptionPane}s in {@link AbstractContainerFixture}.
@@ -31,8 +30,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class AbstractContainerFixture_optionPane_Test extends RobotBasedTestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private FakeContainerFixture launcher;
   private JOptionPaneLauncherWindow window;
@@ -62,7 +61,7 @@ public class AbstractContainerFixture_optionPane_Test extends RobotBasedTestCase
   @Test
   public void should_fail_if_visible_JOptionPane_not_found_by_type_with_timeout() {
     thrown.expect(WaitTimedOutError.class);
-    thrown.expectMessageToContain("Timed out waiting for option pane to be found");
+    thrown.expectMessage("Timed out waiting for option pane to be found");
     launcher.optionPane(timeout(100));
   }
 

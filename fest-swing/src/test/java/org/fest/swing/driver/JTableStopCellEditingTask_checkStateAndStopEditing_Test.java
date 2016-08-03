@@ -14,11 +14,9 @@
  */
 package org.fest.swing.driver;
 
-import static org.fest.test.ExpectedException.none;
-
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link JTableStopCellEditingTask#checkStateAndStopEditing(javax.swing.JTable, int, int)}.
@@ -26,24 +24,27 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class JTableStopCellEditingTask_checkStateAndStopEditing_Test extends JTableCellEditingTask_TestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void should_throw_error_if_row_index_is_out_of_bounds() {
-    thrown.expect(IndexOutOfBoundsException.class, "row <8> should be between <0> and <4>");
+    thrown.expect(IndexOutOfBoundsException.class);
+    thrown.expectMessage("row <8> should be between <0> and <4>");
     JTableStopCellEditingTask.checkStateAndStopEditing(window.table, 8, 2);
   }
 
   @Test
   public void should_throw_error_if_column_index_is_out_of_bounds() {
-    thrown.expect(IndexOutOfBoundsException.class, "column <8> should be between <0> and <1>");
+    thrown.expect(IndexOutOfBoundsException.class);
+    thrown.expectMessage("column <8> should be between <0> and <1>");
     JTableStopCellEditingTask.checkStateAndStopEditing(window.table, 0, 8);
   }
 
   @Test
   public void should_throw_error_if_cell_is_not_editable() {
-    thrown.expect(IndexOutOfBoundsException.class, "Expecting cell [0, 0] to be editable");
+    thrown.expect(IndexOutOfBoundsException.class);
+    thrown.expectMessage("Expecting cell [0, 0] to be editable");
     JTableStopCellEditingTask.checkStateAndStopEditing(window.table, 0, 0);
   }
 

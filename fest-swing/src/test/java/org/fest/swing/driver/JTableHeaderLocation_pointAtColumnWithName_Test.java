@@ -16,7 +16,6 @@ package org.fest.swing.driver;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.swing.edt.GuiActionRunner.execute;
-import static org.fest.test.ExpectedException.none;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,9 +28,9 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.exception.LocationUnavailableException;
 import org.fest.swing.util.Pair;
 import org.fest.swing.util.TextMatcher;
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link JTableHeaderLocation#pointAt(JTableHeader, TextMatcher)}.
@@ -40,8 +39,8 @@ import org.junit.Test;
  * @author Yvonne Wang
  */
 public class JTableHeaderLocation_pointAtColumnWithName_Test extends JTableHeaderLocation_TestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private TextMatcher matcher;
 
@@ -67,7 +66,8 @@ public class JTableHeaderLocation_pointAtColumnWithName_Test extends JTableHeade
     when(matcher.isMatching("1")).thenReturn(false);
     when(matcher.description()).thenReturn("text");
     when(matcher.formattedValues()).thenReturn("'Hello'");
-    thrown.expect(LocationUnavailableException.class, "Unable to find column with name matching text 'Hello'");
+    thrown.expect(LocationUnavailableException.class);
+    thrown.expectMessage("Unable to find column with name matching text 'Hello'");
     matchingIndexAndPoint();
   }
 

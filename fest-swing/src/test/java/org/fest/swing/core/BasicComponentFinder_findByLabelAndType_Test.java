@@ -15,15 +15,14 @@
 package org.fest.swing.core;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.test.ExpectedException.none;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import org.fest.swing.exception.ComponentLookupException;
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link BasicComponentFinder#findByLabel(String, Class)}.
@@ -32,8 +31,8 @@ import org.junit.Test;
  * @author Yvonne Wang
  */
 public class BasicComponentFinder_findByLabelAndType_Test extends BasicComponentFinder_TestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void should_find_Component() {
@@ -44,7 +43,8 @@ public class BasicComponentFinder_findByLabelAndType_Test extends BasicComponent
   @Test
   public void should_throw_error_if_Component_not_found() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("label='list'", "type=javax.swing.JLabel");
+    thrown.expectMessage("label='list'");
+    thrown.expectMessage("type=javax.swing.JLabel");
     finder.findByLabel("list", JLabel.class);
   }
 }
