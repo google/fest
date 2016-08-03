@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2007-2013 the original author or authors.
+ * Copyright @2007-2016 the FEST authors.
  */
 package org.fest.swing.fixture;
 
@@ -72,7 +72,7 @@ import org.fest.swing.timing.Timeout;
  * @author Yvonne Wang
  */
 public abstract class AbstractContainerFixture<S, C extends Container, D extends ComponentDriver> extends
-    AbstractComponentFixture<S, C, D> implements ComponentContainerFixture {
+    AbstractComponentFixture<S, C, D> implements ComponentContainerFixture, ContainerFixture<C> {
   private static final Timeout DEFAULT_DIALOG_LOOKUP_TIMEOUT = timeout(100);
 
   private final JMenuItemFinder menuItemFinder;

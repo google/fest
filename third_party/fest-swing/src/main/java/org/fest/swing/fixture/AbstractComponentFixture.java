@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2006-2013 the original author or authors.
+ * Copyright @2006-2016 the FEST authors.
  */
 package org.fest.swing.fixture;
 
@@ -433,7 +433,7 @@ public abstract class AbstractComponentFixture<S, C extends Component, D extends
   }
 
   /** @return the {@link Robot} that simulates user events on {@link #target()}. */
-  protected final @Nonnull Robot robot() {
+  public final @Nonnull Robot robot() {
     return robot;
   }
 
