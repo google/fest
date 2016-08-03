@@ -17,7 +17,6 @@ package org.fest.swing.fixture;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.swing.edt.GuiActionRunner.execute;
 import static org.fest.swing.test.core.NeverMatchingComponentMatcher.neverMatches;
-import static org.fest.test.ExpectedException.none;
 import static org.fest.util.Preconditions.checkNotNull;
 
 import java.awt.Dimension;
@@ -31,9 +30,9 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.exception.ComponentLookupException;
 import org.fest.swing.test.core.RobotBasedTestCase;
 import org.fest.swing.test.swing.TestWindow;
-import org.fest.test.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests lookups of {@code JTabbedPane}s in {@link AbstractContainerFixture}.
@@ -41,8 +40,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class AbstractContainerFixture_tabbedPane_Test extends RobotBasedTestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private FakeContainerFixture fixture;
   private MyWindow window;
@@ -63,8 +62,8 @@ public class AbstractContainerFixture_tabbedPane_Test extends RobotBasedTestCase
   @Test
   public void should_fail_if_visible_JTabbedPane_not_found_by_name() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher",
-        "name='myTabbedPane', type=javax.swing.JTabbedPane, requireShowing=true");
+    thrown.expectMessage("Unable to find component using matcher");
+    thrown.expectMessage("name='myTabbedPane', type=javax.swing.JTabbedPane, requireShowing=true");
     fixture.tabbedPane("myTabbedPane");
   }
 
@@ -78,8 +77,8 @@ public class AbstractContainerFixture_tabbedPane_Test extends RobotBasedTestCase
   @Test
   public void should_fail_if_visible_JTabbedPane_not_found_by_type() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher",
-        "type=javax.swing.JTabbedPane, requireShowing=true");
+    thrown.expectMessage("Unable to find component using matcher");
+    thrown.expectMessage("type=javax.swing.JTabbedPane, requireShowing=true");
     fixture.tabbedPane();
   }
 
@@ -98,7 +97,7 @@ public class AbstractContainerFixture_tabbedPane_Test extends RobotBasedTestCase
   @Test
   public void should_fail_if_visible_JTabbedPane_not_found_by_Matcher() {
     thrown.expect(ComponentLookupException.class);
-    thrown.expectMessageToContain("Unable to find component using matcher");
+    thrown.expectMessage("Unable to find component using matcher");
     fixture.tabbedPane(neverMatches(JTabbedPane.class));
   }
 

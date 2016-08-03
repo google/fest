@@ -10,20 +10,19 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.driver;
 
 import static org.fest.swing.test.builder.JTables.table;
-import static org.fest.test.ExpectedException.none;
 
 import javax.swing.JTable;
 
 import org.fest.swing.test.core.RobotBasedTestCase;
-import org.fest.test.ExpectedException;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link JTableDriver#selectRows(javax.swing.JTable, int...)} using invalid input.
@@ -31,8 +30,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class JTableDriver_selectRows_withInvalidInput_Test extends RobotBasedTestCase {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private static JTable table;
   private JTableDriver driver;

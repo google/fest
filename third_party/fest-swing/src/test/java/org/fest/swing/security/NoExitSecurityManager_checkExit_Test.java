@@ -10,21 +10,20 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.security;
 
-import static org.fest.test.ExpectedException.none;
 import static org.fest.util.Arrays.array;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-import org.fest.test.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * Tests for {@link NoExitSecurityManager#checkExit(int)}.
@@ -32,8 +31,8 @@ import org.junit.Test;
  * @author Alex Ruiz
  */
 public class NoExitSecurityManager_checkExit_Test {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private ExitCallHook hook;
   private StackTraces stackTraces;
