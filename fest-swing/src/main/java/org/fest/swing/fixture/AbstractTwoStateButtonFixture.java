@@ -62,26 +62,36 @@ public abstract class AbstractTwoStateButtonFixture<S, T extends AbstractButton>
   }
 
   /**
-   * Checks (or selects) this fixture's {@code AbstractButton} only it is not already checked.
+   * Selects this fixture's {@code AbstractButton} only it is not already selected.
    * 
    * @return this fixture.
    * @throws IllegalStateException if this fixture's {@code AbstractButton} is disabled.
    * @throws IllegalStateException if this fixture's {@code AbstractButton} is not showing on the screen.
    */
-  public final @Nonnull S check() {
+  public final @Nonnull S select() {
     driver().select(target());
     return myself();
   }
 
   /**
-   * Unchecks this fixture's {@code AbstractButton} only if it is checked.
+   * Deselects this fixture's {@code AbstractButton} only if it is selected.
    * 
    * @return this fixture.
    * @throws IllegalStateException if this fixture's {@code AbstractButton} is disabled.
    * @throws IllegalStateException if this fixture's {@code AbstractButton} is not showing on the screen.
    */
-  public final @Nonnull S uncheck() {
+  public final @Nonnull S deselect() {
     driver().deselect(target());
+    return myself();
+  }
+
+  public final @Nonnull S setSelected(boolean value) {
+    if (value) {
+      driver().select(target());
+    }
+    else {
+      driver().deselect(target());
+    }
     return myself();
   }
 

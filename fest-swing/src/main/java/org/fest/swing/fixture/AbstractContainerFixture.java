@@ -72,7 +72,7 @@ import org.fest.swing.timing.Timeout;
  * @author Yvonne Wang
  */
 public abstract class AbstractContainerFixture<S, C extends Container, D extends ComponentDriver> extends
-    AbstractComponentFixture<S, C, D> implements ComponentContainerFixture {
+    AbstractComponentFixture<S, C, D> implements ComponentContainerFixture, ContainerFixture<C> {
   private static final Timeout DEFAULT_DIALOG_LOOKUP_TIMEOUT = timeout(100);
 
   private final JMenuItemFinder menuItemFinder;
