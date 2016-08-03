@@ -10,17 +10,12 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.data;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsReflexive;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsSymmetric;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsTransitive;
-import static org.fest.test.EqualsHashCodeContractAssert.assertMaintainsEqualsAndHashCodeContract;
 
-import org.fest.test.EqualsHashCodeContractTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +24,7 @@ import org.junit.Test;
  * 
  * @author Alex Ruiz
  */
-public class TableCell_equals_hashCode_Test implements EqualsHashCodeContractTestCase {
+public class TableCell_equals_hashCode_Test {
   private TableCell cell;
 
   @Before
@@ -45,30 +40,32 @@ public class TableCell_equals_hashCode_Test implements EqualsHashCodeContractTes
 
   @Test
   public void should_have_reflexive_equals() {
-    assertEqualsIsReflexive(cell);
+    assertThat(cell).isEqualTo(cell);
   }
 
   @Test
   public void should_have_symmetric_equals() {
     TableCell other = TableCell.row(6).column(8);
-    assertEqualsIsSymmetric(cell, other);
+    assertThat(other).isEqualTo(cell);
+    assertThat(cell).isEqualTo(other);
   }
 
   @Test
   public void should_have_transitive_equals() {
     TableCell other1 = TableCell.row(6).column(8);
     TableCell other2 = TableCell.row(6).column(8);
-    assertEqualsIsTransitive(cell, other1, other2);
+    assertThat(other1).isEqualTo(cell);
+    assertThat(other2).isEqualTo(other1);
+    assertThat(other2).isEqualTo(cell);
   }
 
-  @Override
   @Test
   public void should_maintain_equals_and_hashCode_contract() {
     TableCell other = TableCell.row(6).column(8);
-    assertMaintainsEqualsAndHashCodeContract(cell, other);
+    assertThat(other).isEqualTo(cell);
+    assertThat(other.hashCode()).isEqualTo(cell.hashCode());
   }
 
-  @Override
   @Test
   public void should_not_be_equal_to_null() {
     assertThat(cell.equals(null)).isFalse();
@@ -91,31 +88,26 @@ public class TableCell_equals_hashCode_Test implements EqualsHashCodeContractTes
     assertThat(cell.equals(other)).isFalse();
   }
 
-  @Override
   public void should_not_be_equal_to_Object_of_different_type() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_consistent() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_reflexive() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_symmetric() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_transitive() {
     // TODO Auto-generated method stub
 
