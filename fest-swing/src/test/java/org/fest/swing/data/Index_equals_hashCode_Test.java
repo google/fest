@@ -15,12 +15,7 @@
 package org.fest.swing.data;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsReflexive;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsSymmetric;
-import static org.fest.test.EqualsHashCodeContractAssert.assertEqualsIsTransitive;
-import static org.fest.test.EqualsHashCodeContractAssert.assertMaintainsEqualsAndHashCodeContract;
 
-import org.fest.test.EqualsHashCodeContractTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +24,7 @@ import org.junit.Test;
  * 
  * @author Alex Ruiz
  */
-public class Index_equals_hashCode_Test implements EqualsHashCodeContractTestCase {
+public class Index_equals_hashCode_Test {
   private Index index;
 
   @Before
@@ -45,30 +40,32 @@ public class Index_equals_hashCode_Test implements EqualsHashCodeContractTestCas
 
   @Test
   public void should_have_reflexive_equals() {
-    assertEqualsIsReflexive(index);
+    assertThat(index).isEqualTo(index);
   }
 
   @Test
   public void should_have_symmetric_equals() {
     Index other = Index.atIndex(8);
-    assertEqualsIsSymmetric(index, other);
+    assertThat(other).isEqualTo(index);
+    assertThat(index).isEqualTo(other);
   }
 
   @Test
   public void should_have_transitive_equals() {
     Index other1 = Index.atIndex(8);
     Index other2 = Index.atIndex(8);
-    assertEqualsIsTransitive(index, other1, other2);
+    assertThat(other1).isEqualTo(index);
+    assertThat(other2).isEqualTo(other1);
+    assertThat(other2).isEqualTo(index);
   }
 
-  @Override
   @Test
   public void should_maintain_equals_and_hashCode_contract() {
     Index other = Index.atIndex(8);
-    assertMaintainsEqualsAndHashCodeContract(index, other);
+    assertThat(other).isEqualTo(index);
+    assertThat(other.hashCode()).isEqualTo(index.hashCode());
   }
 
-  @Override
   @Test
   public void should_not_be_equal_to_null() {
     assertThat(index.equals(null)).isFalse();
@@ -85,31 +82,26 @@ public class Index_equals_hashCode_Test implements EqualsHashCodeContractTestCas
     assertThat(index.equals(other)).isFalse();
   }
 
-  @Override
   public void should_not_be_equal_to_Object_of_different_type() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_consistent() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_reflexive() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_symmetric() {
     // TODO Auto-generated method stub
 
   }
 
-  @Override
   public void equals_should_be_transitive() {
     // TODO Auto-generated method stub
 
