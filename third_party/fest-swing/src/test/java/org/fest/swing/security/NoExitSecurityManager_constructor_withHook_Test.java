@@ -10,11 +10,9 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.security;
-
-import static org.junit.rules.ExpectedException.none;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,8 +24,8 @@ import org.junit.rules.ExpectedException;
  * @author Alex Ruiz
  */
 public class NoExitSecurityManager_constructor_withHook_Test {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void should_throw_error_if_hook_is_null() {

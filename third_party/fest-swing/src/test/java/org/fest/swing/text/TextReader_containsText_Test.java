@@ -10,13 +10,12 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2010-2013 the original author or authors.
+ * Copyright @2010-2016 the FEST authors.
  */
 package org.fest.swing.text;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.swing.test.builder.JLabels.label;
-import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,8 +34,8 @@ import org.junit.rules.ExpectedException;
  * @author Alex Ruiz
  */
 public class TextReader_containsText_Test extends EDTSafeTestCase {
-  @Rule
-  public final ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   private TextReader<JButton> reader;
 
