@@ -42,13 +42,13 @@ public class AbstractTwoStateButtonFixture_withMocks_Test {
 
   @Test
   public void should_call_select_in_driver_and_return_self() {
-    assertThat(fixture.check()).isSameAs(fixture);
+    assertThat(fixture.select()).isSameAs(fixture);
     verify(fixture.driver()).select(fixture.target());
   }
 
   @Test
   public void should_call_deselect_in_driver_and_return_self() {
-    assertThat(fixture.uncheck()).isSameAs(fixture);
+    assertThat(fixture.deselect()).isSameAs(fixture);
     verify(fixture.driver()).deselect(fixture.target());
   }
 
