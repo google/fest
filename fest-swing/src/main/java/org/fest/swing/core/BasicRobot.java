@@ -674,6 +674,7 @@ public class BasicRobot implements Robot {
     for (char character : text.toCharArray()) {
       type(character);
     }
+    waitForIdle(); // Wait for all the key events triggered by type to be processed
   }
 
   /** {@inheritDoc} */
