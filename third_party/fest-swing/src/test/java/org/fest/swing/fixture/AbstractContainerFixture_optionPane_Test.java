@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.fixture;
 
@@ -34,13 +34,13 @@ public class AbstractContainerFixture_optionPane_Test extends RobotBasedTestCase
   @Rule
   public ExpectedException thrown = none();
 
-  private ContainerFixture launcher;
+  private FakeContainerFixture launcher;
   private JOptionPaneLauncherWindow window;
 
   @Override
   protected final void onSetUp() {
     window = JOptionPaneLauncherWindow.createNew(getClass());
-    launcher = new ContainerFixture(robot, window);
+    launcher = new FakeContainerFixture(robot, window);
   }
 
   @Test
