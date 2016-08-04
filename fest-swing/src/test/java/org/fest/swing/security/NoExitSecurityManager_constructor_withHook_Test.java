@@ -14,8 +14,6 @@
  */
 package org.fest.swing.security;
 
-import static org.junit.rules.ExpectedException.none;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -26,8 +24,8 @@ import org.junit.rules.ExpectedException;
  * @author Alex Ruiz
  */
 public class NoExitSecurityManager_constructor_withHook_Test {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void should_throw_error_if_hook_is_null() {

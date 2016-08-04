@@ -14,8 +14,6 @@
  */
 package org.fest.swing.driver;
 
-import static org.junit.rules.ExpectedException.none;
-
 import java.util.regex.Pattern;
 
 import org.junit.Rule;
@@ -28,8 +26,8 @@ import org.junit.rules.ExpectedException;
  * @author Alex Ruiz
  */
 public class TextAssert_matches_Test {
-  @Rule
-  public ExpectedException thrown = none();
+
+  @Rule public final ExpectedException thrown = ExpectedException.none();
 
   @Test
   public void should_fail_if_actual_does_not_match_regex_pattern() {
