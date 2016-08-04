@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2009-2013 the original author or authors.
+ * Copyright @2009-2016 the FEST authors.
  */
 package org.fest.swing.fixture;
 
@@ -42,13 +42,13 @@ public class AbstractTwoStateButtonFixture_withMocks_Test {
 
   @Test
   public void should_call_select_in_driver_and_return_self() {
-    assertThat(fixture.check()).isSameAs(fixture);
+    assertThat(fixture.select()).isSameAs(fixture);
     verify(fixture.driver()).select(fixture.target());
   }
 
   @Test
   public void should_call_deselect_in_driver_and_return_self() {
-    assertThat(fixture.uncheck()).isSameAs(fixture);
+    assertThat(fixture.deselect()).isSameAs(fixture);
     verify(fixture.driver()).deselect(fixture.target());
   }
 
