@@ -41,13 +41,13 @@ public class AbstractContainerFixture_dialog_Test extends RobotBasedTestCase {
   @Rule
   public ExpectedException thrown = none();
 
-  private ContainerFixture fixture;
+  private FakeContainerFixture fixture;
   private WindowLauncher window;
 
   @Override
   protected void onSetUp() {
     window = WindowLauncher.createNew(getClass());
-    fixture = new ContainerFixture(robot, window);
+    fixture = new FakeContainerFixture(robot, window);
   }
 
   @Test

@@ -25,8 +25,8 @@ import org.fest.swing.driver.FrameDriver;
  *
  * @author Alex Ruiz
  */
-public class ContainerFixture extends AbstractContainerFixture<ContainerFixture, JFrame, FrameDriver> {
-  public ContainerFixture(Robot robot, JFrame target) {
+public class FakeContainerFixture extends AbstractContainerFixture<ContainerFixture, JFrame, FrameDriver> {
+  public FakeContainerFixture(Robot robot, JFrame target) {
     super(ContainerFixture.class, robot, target);
   }
 

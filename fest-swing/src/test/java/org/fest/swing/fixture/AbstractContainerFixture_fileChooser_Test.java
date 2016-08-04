@@ -41,13 +41,13 @@ public class AbstractContainerFixture_fileChooser_Test extends RobotBasedTestCas
   @Rule
   public ExpectedException thrown = none();
 
-  private ContainerFixture fixture;
+  private FakeContainerFixture fixture;
   private JFileChooserLauncherWindow window;
 
   @Override
   protected final void onSetUp() {
     window = JFileChooserLauncherWindow.createNew(getClass());
-    fixture = new ContainerFixture(robot, window);
+    fixture = new FakeContainerFixture(robot, window);
   }
 
   @Test

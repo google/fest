@@ -34,13 +34,13 @@ public class AbstractContainerFixture_optionPane_Test extends RobotBasedTestCase
   @Rule
   public ExpectedException thrown = none();
 
-  private ContainerFixture launcher;
+  private FakeContainerFixture launcher;
   private JOptionPaneLauncherWindow window;
 
   @Override
   protected final void onSetUp() {
     window = JOptionPaneLauncherWindow.createNew(getClass());
-    launcher = new ContainerFixture(robot, window);
+    launcher = new FakeContainerFixture(robot, window);
   }
 
   @Test

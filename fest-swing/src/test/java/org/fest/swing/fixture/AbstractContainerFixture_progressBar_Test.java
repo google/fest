@@ -39,13 +39,13 @@ public class AbstractContainerFixture_progressBar_Test extends RobotBasedTestCas
   @Rule
   public ExpectedException thrown = none();
 
-  private ContainerFixture fixture;
+  private FakeContainerFixture fixture;
   private MyWindow window;
 
   @Override
   protected final void onSetUp() {
     window = MyWindow.createNew(getClass());
-    fixture = new ContainerFixture(robot, window);
+    fixture = new FakeContainerFixture(robot, window);
   }
 
   @Test
