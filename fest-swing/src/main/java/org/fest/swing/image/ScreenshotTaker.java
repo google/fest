@@ -22,8 +22,11 @@ import static org.fest.swing.query.ComponentSizeQuery.sizeOf;
 import static org.fest.util.Preconditions.checkNotNull;
 
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -84,7 +87,19 @@ public class ScreenshotTaker {
    * @throws IORuntimeException if an I/O error prevents the image from being saved as a file.
    */
   public void saveDesktopAsPng(String imageFilePath) {
-    saveImage(takeDesktopScreenshot(), imageFilePath);
+    BufferedImage image = takeDesktopScreenshot();
+    indicatePointerLocation(image);
+    saveImage(image, imageFilePath);
+  }
+
+  private static void indicatePointerLocation(BufferedImage image) {
+    Point mouse = MouseInfo.getPointerInfo().getLocation();
+    Graphics g = image.getGraphics();
+    g.setColor(Color.RED);
+    // drawLine may not work well on Mac OS X retina.
+    g.fillRect(mouse.x - 10, mouse.y, 20, 1);
+    g.fillRect(mouse.x, mouse.y - 10, 1, 20);
+    g.dispose();
   }
 
   /**
