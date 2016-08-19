@@ -308,8 +308,8 @@ public class JTreeDriver extends JComponentDriver {
   /**
    * Expands the given row, is possible. If the row is already expanded, this method will not do anything.
    * <p>
-   * NOTE: a reasonable assumption is that the toggle control is just to the left of the row bounds and is roughly a
-   * square the dimensions of the row height. Clicking in the center of that square should work.
+   * NOTE: Simulates a user expanding the tree node at the given row,
+   * by double-clicking the row, not by clicking the expand icon.
    * </p>
    *
    * @param tree the target {@code JTree}.
@@ -671,7 +671,7 @@ public class JTreeDriver extends JComponentDriver {
   }
 
   /*
-   * Returns: 1. if the node is expanded 2. the location of the node
+   * Returns a pair (Boolean: node is selected, Point: node location).
    */
   @RunsInEDT
   private static @Nonnull Pair<Boolean, Point> scrollToRow(final @Nonnull JTree tree, final int row,

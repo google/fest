@@ -408,7 +408,8 @@ public class JTreeFixture extends AbstractJPopupMenuInvokerFixture<JTreeFixture,
   }
 
   /**
-   * Simulates a user expanding the tree node at the given row.
+   * Simulates a user expanding the tree node at the given row,
+   * by double-clicking the row, not by clicking the expand icon.
    *
    * @param row the index of the row to expand.
    * @return this fixture.
