@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  *
- * Copyright @2007-2013 the original author or authors.
+ * Copyright @2007-2016 the FEST authors.
  */
 package org.fest.swing.fixture;
 
@@ -408,7 +408,8 @@ public class JTreeFixture extends AbstractJPopupMenuInvokerFixture<JTreeFixture,
   }
 
   /**
-   * Simulates a user expanding the tree node at the given row.
+   * Simulates a user expanding the tree node at the given row,
+   * by double-clicking the row, not by clicking the expand icon.
    *
    * @param row the index of the row to expand.
    * @return this fixture.
