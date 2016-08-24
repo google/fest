@@ -16,8 +16,11 @@ package org.fest.swing.edt;
 
 import static javax.swing.SwingUtilities.isEventDispatchThread;
 import static org.fest.swing.exception.ActionFailedException.actionFailure;
+import static org.fest.util.Preconditions.checkNotNull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 import org.fest.swing.exception.ActionFailedException;
 
@@ -30,6 +33,24 @@ import org.fest.swing.exception.ActionFailedException;
  */
 public abstract class GuiQuery<T> extends GuiAction {
   private T result;
+
+  /** Returns the result from {@code supplier} on the dispatch thread, or throws {@link NullPointerException} if that is {@code null}. */
+  @Nonnull
+  public static <T> T getNonNull(@Nonnull Supplier<T> supplier) {
+    return checkNotNull(GuiActionRunner.execute(from(supplier)));
+  }
+
+  /** Returns a {@code GuiQuery} whose {@link #executeInEDT} method simply uses {@code supplier}. */
+  @Nonnull
+  public static <T> GuiQuery<T> from(@Nonnull Supplier<T> supplier) {
+    return new GuiQuery<T>() {
+      @Nullable
+      @Override
+      protected T executeInEDT() throws Throwable {
+        return supplier.get();
+      }
+    };
+  }
 
   /**
    * Executes the query in the event dispatch thread (EDT.) This method waits until the action has finish its execution.
