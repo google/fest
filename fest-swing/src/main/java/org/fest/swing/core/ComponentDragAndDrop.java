@@ -14,6 +14,7 @@
  */
 package org.fest.swing.core;
 
+import static org.fest.swing.awt.AWT.locationOnScreenOf;
 import static org.fest.swing.core.MouseButton.LEFT_BUTTON;
 import static org.fest.swing.exception.ActionFailedException.actionFailure;
 import static org.fest.swing.timing.Pause.pause;
@@ -25,6 +26,7 @@ import static org.fest.util.Preconditions.checkNotNull;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
@@ -92,11 +94,11 @@ public class ComponentDragAndDrop {
         point(x + dx + 1, y + dy));
   }
 
-  private int distance(int coordinate, int dimension) {
+  private static int distance(int coordinate, int dimension) {
     return coordinate + DRAG_THRESHOLD < dimension ? DRAG_THRESHOLD : 0;
   }
 
-  private @Nonnull Point point(int x, int y) {
+  private @Nonnull static Point point(int x, int y) {
     return new Point(x, y);
   }
 
@@ -157,9 +159,15 @@ public class ComponentDragAndDrop {
   }
 
   private void mouseMove(@Nonnull Component target, @Nonnull Point... points) {
-    for (Point p : points) {
-      checkNotNull(p);
-      robot.moveMouse(target, p.x, p.y);
+    // Some component might hide once the drag is started so we need to translate all the points now
+    ArrayList<Point> translatedPoints = new ArrayList<>(points.length);
+    for (Point point : points) {
+      Point newPoint = checkNotNull(locationOnScreenOf(target));
+      newPoint.translate(point.x, point.y);
+      translatedPoints.add(newPoint);
+    }
+    for (Point point : translatedPoints) {
+      robot.moveMouse(point.x, point.y);
     }
   }
 }
