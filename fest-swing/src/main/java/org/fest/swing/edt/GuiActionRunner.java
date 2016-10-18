@@ -35,7 +35,7 @@ import org.fest.swing.exception.UnexpectedException;
  */
 @ThreadSafe
 public class GuiActionRunner {
-  @GuardedBy("this")
+  @GuardedBy("GuiActionRunner.class")
   private static boolean executeInEDT = true;
 
   /**
