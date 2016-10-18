@@ -104,7 +104,7 @@ class JTreePathFinder {
 
   private @Nonnull LocationUnavailableException multipleMatchingNodes(@Nonnull String matchingText,
       @Nullable Object parentText) {
-    String msg = String.format("There is more than one node with value '%s' under", matchingText, quote(parentText));
+    String msg = String.format("There is more than one node with value '%s' under %s", matchingText, quote(parentText));
     throw new LocationUnavailableException(msg);
   }
 

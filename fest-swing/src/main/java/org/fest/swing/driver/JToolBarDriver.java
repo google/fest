@@ -208,7 +208,7 @@ public class JToolBarDriver extends JComponentDriver {
       @Override
       protected void executeInEDT() {
         if (isJToolBarFloating(toolBar)) {
-          String msg = String.format("Failed to dock <%s> using constraint ''", format(toolBar), constraint);
+          String msg = String.format("Failed to dock <%s> using constraint '%s'", format(toolBar), constraint);
           throw actionFailure(msg);
         }
       }
