@@ -70,7 +70,7 @@ public class GuiActionRunner {
    * @see #executeInEDT()
    */
   public static @Nullable <T> T execute(@Nonnull GuiQuery<T> query) {
-    if (!executeInEDT) {
+    if (!executeInEDT()) {
       return executeInCurrentThread(query);
     }
     run(query);
@@ -94,7 +94,7 @@ public class GuiActionRunner {
    * @see #executeInEDT()
    */
   public static void execute(@Nonnull GuiTask task) {
-    if (!executeInEDT) {
+    if (!executeInEDT()) {
       executeInCurrentThread(task);
       return;
     }
