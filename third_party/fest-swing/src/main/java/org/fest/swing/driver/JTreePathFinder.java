@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2008-2013 the original author or authors.
+ * Copyright @2008-2016 the FEST authors.
  */
 package org.fest.swing.driver;
 
@@ -104,7 +104,7 @@ class JTreePathFinder {
 
   private @Nonnull LocationUnavailableException multipleMatchingNodes(@Nonnull String matchingText,
       @Nullable Object parentText) {
-    String msg = String.format("There is more than one node with value '%s' under", matchingText, quote(parentText));
+    String msg = String.format("There is more than one node with value '%s' under %s", matchingText, quote(parentText));
     throw new LocationUnavailableException(msg);
   }
 

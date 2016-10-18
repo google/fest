@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2008-2013 the original author or authors.
+ * Copyright @2008-2016 the FEST authors.
  */
 package org.fest.swing.driver;
 
@@ -208,7 +208,7 @@ public class JToolBarDriver extends JComponentDriver {
       @Override
       protected void executeInEDT() {
         if (isJToolBarFloating(toolBar)) {
-          String msg = String.format("Failed to dock <%s> using constraint ''", format(toolBar), constraint);
+          String msg = String.format("Failed to dock <%s> using constraint '%s'", format(toolBar), constraint);
           throw actionFailure(msg);
         }
       }
