@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2007-2013 the original author or authors.
+ * Copyright @2007-2016 the FEST authors.
  */
 package org.fest.swing.lock;
 
@@ -51,7 +51,7 @@ public final class ScreenLock {
   public void acquire(@Nonnull Object newOwner) {
     lock.lock();
     try {
-      if (alreadyAcquiredBy(newOwner)) {
+      if (acquired && owner == newOwner) {
         return;
       }
       while (acquired) {
@@ -99,14 +99,10 @@ public final class ScreenLock {
   public boolean acquiredBy(@Nonnull Object possibleOwner) {
     lock.lock();
     try {
-      return alreadyAcquiredBy(possibleOwner);
+      return acquired && owner == possibleOwner;
     } finally {
       lock.unlock();
     }
-  }
-
-  private boolean alreadyAcquiredBy(@Nonnull Object possibleOwner) {
-    return acquired && owner == possibleOwner;
   }
 
   /**
