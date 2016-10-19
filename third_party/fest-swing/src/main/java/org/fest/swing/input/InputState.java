@@ -10,7 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  * 
- * Copyright @2008-2013 the original author or authors.
+ * Copyright @2008-2016 the FEST authors.
  */
 package org.fest.swing.input;
 
@@ -140,11 +140,11 @@ public class InputState {
     return null;
   }
 
-  private void lastEventTime(@Nonnull InputEvent event) {
+  private synchronized void lastEventTime(@Nonnull InputEvent event) {
     lastEventTime = event.getWhen();
   }
 
-  private void modifiers(int newModifiers) {
+  private synchronized void modifiers(int newModifiers) {
     modifiers = newModifiers;
   }
 
@@ -276,7 +276,7 @@ public class InputState {
    * 
    * @return {@code true} if there is a native drag/drop operation in progress, {@code false} otherwise.
    */
-  public boolean isNativeDragActive() {
+  public synchronized boolean isNativeDragActive() {
     return dragDropInfo.isNativeDragActive();
   }
 }
