@@ -105,7 +105,6 @@ public class BasicRobot implements Robot {
 
   private static final ComponentMatcher POPUP_MATCHER = new TypeMatcher(JPopupMenu.class, true);
 
-  @GuardedBy("this")
   private volatile boolean active;
 
   private static final Runnable EMPTY_RUNNABLE = new Runnable() {
