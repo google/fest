@@ -140,11 +140,11 @@ public class InputState {
     return null;
   }
 
-  private void lastEventTime(@Nonnull InputEvent event) {
+  private synchronized void lastEventTime(@Nonnull InputEvent event) {
     lastEventTime = event.getWhen();
   }
 
-  private void modifiers(int newModifiers) {
+  private synchronized void modifiers(int newModifiers) {
     modifiers = newModifiers;
   }
 
@@ -276,7 +276,7 @@ public class InputState {
    * 
    * @return {@code true} if there is a native drag/drop operation in progress, {@code false} otherwise.
    */
-  public boolean isNativeDragActive() {
+  public synchronized boolean isNativeDragActive() {
     return dragDropInfo.isNativeDragActive();
   }
 }
