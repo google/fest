@@ -51,7 +51,7 @@ public final class ScreenLock {
   public void acquire(@Nonnull Object newOwner) {
     lock.lock();
     try {
-      if (alreadyAcquiredBy(newOwner)) {
+      if (acquired && owner == newOwner) {
         return;
       }
       while (acquired) {
@@ -99,14 +99,10 @@ public final class ScreenLock {
   public boolean acquiredBy(@Nonnull Object possibleOwner) {
     lock.lock();
     try {
-      return alreadyAcquiredBy(possibleOwner);
+      return acquired && owner == possibleOwner;
     } finally {
       lock.unlock();
     }
-  }
-
-  private boolean alreadyAcquiredBy(@Nonnull Object possibleOwner) {
-    return acquired && owner == possibleOwner;
   }
 
   /**
