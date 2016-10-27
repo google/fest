@@ -27,11 +27,6 @@ public final class Wait {
   }
 
   /** Sets a time limit. */
-  public static Wait minutes(long minutesToWait) {
-    return new Wait(Timeout.timeout(minutesToWait, TimeUnit.MINUTES));
-  }
-
-  /** Sets a time limit. */
   public static Wait seconds(long secondsToWait) {
     return new Wait(Timeout.timeout(secondsToWait, TimeUnit.SECONDS));
   }
@@ -48,7 +43,7 @@ public final class Wait {
       myDescription = description;
     }
 
-    /** Waits until {@code objective} is met or the time limit set by {@link #minutes} or {@link #seconds} expires. */
+    /** Waits until {@code objective} is met or the time limit set by {@link #seconds} expires. */
     public void until(@Nonnull final Objective objective) {
       Condition condition = new Condition(myDescription) {
         @Override
