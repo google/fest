@@ -325,6 +325,7 @@ public class AWT {
     Point parentLocation = locationOnScreenOf(parent);
     if (parentLocation != null) {
       location.translate(parentLocation.x, parentLocation.y);
+      return location;
     }
     return null;
   }
