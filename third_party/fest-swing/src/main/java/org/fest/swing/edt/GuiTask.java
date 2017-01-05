@@ -18,12 +18,34 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 import org.fest.swing.exception.ActionFailedException;
 
+import javax.annotation.Nonnull;
+
 /**
  * Task that should be executed in the event dispatch thread (EDT.)
  * 
  * @author Alex Ruiz
  */
 public abstract class GuiTask extends GuiAction {
+  /**
+   * Runs exectutable {@code executable} in the event dispatch thread (EDT).
+   */
+  public static void execute(@Nonnull GuiTask.Executable executable) {
+    GuiActionRunner.execute(new GuiTask() {
+      @Override
+      protected void executeInEDT() throws Throwable {
+        executable.execute();
+      }
+    });
+  }
+
+  /**
+   * A task run by {@link #execute} that may throw (which a {@link Runnable} cannot).
+   */
+  @FunctionalInterface
+  public interface Executable {
+    void execute() throws Throwable;
+  }
+
   /**
    * Runs this task action and verifies that it is executed in the event dispatch thread (EDT.)
    * 
