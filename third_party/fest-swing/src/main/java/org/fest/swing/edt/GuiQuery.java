@@ -37,19 +37,19 @@ public abstract class GuiQuery<T> extends GuiAction {
   /** Returns the result from {@code supplier} on the dispatch thread, or throws {@link NullPointerException} if that is {@code null}. */
   @Nonnull
   public static <T> T getNonNull(@Nonnull Supplier<T> supplier) {
-    return checkNotNull(GuiActionRunner.execute(from(supplier)));
+    return checkNotNull(get(supplier));
   }
 
-  /** Returns a {@code GuiQuery} whose {@link #executeInEDT} method simply uses {@code supplier}. */
-  @Nonnull
-  public static <T> GuiQuery<T> from(@Nonnull Supplier<T> supplier) {
-    return new GuiQuery<T>() {
+  /** Returns the result from {@code supplier} on the dispatch thread. */
+  @Nullable
+  public static <T> T get(@Nonnull Supplier<T> supplier) {
+    return GuiActionRunner.execute(new GuiQuery<T>() {
       @Nullable
       @Override
       protected T executeInEDT() throws Throwable {
         return supplier.get();
       }
-    };
+    });
   }
 
   /**
