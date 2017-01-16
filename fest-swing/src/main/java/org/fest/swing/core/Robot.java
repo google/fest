@@ -335,12 +335,28 @@ public interface Robot {
   void enterText(@Nonnull String text);
 
   /**
+   * Simulates a user entering the given text to the specified {@code Component}.
+   *
+   * @param text the text to enter.
+   * @param c the given {@code Component}.
+   */
+  void enterText(@Nonnull String text, @Nonnull Component c);
+
+  /**
    * Types the given character. Note that this method sends the key strokes to the AWT or Swing {@code Component} that
    * has input focus.
-   * 
+   *
    * @param character the character to type.
    */
   void type(char character);
+
+  /**
+   * Types the given character to the specified {@code Component}.
+   *
+   * @param character the character to type.
+   * @param c the given {@code Component}.
+   */
+  void type(char character, @Nonnull Component c);
 
   /**
    * Type the given key code with the given modifiers. Modifiers is a mask from the available

@@ -17,9 +17,7 @@ package org.fest.swing.core;
 import static java.awt.event.InputEvent.BUTTON1_MASK;
 import static java.awt.event.InputEvent.BUTTON2_MASK;
 import static java.awt.event.InputEvent.BUTTON3_MASK;
-import static java.awt.event.KeyEvent.CHAR_UNDEFINED;
-import static java.awt.event.KeyEvent.KEY_TYPED;
-import static java.awt.event.KeyEvent.VK_UNDEFINED;
+import static java.awt.event.KeyEvent.*;
 import static java.awt.event.WindowEvent.WINDOW_CLOSING;
 import static java.lang.System.currentTimeMillis;
 import static javax.swing.SwingUtilities.getWindowAncestor;
@@ -667,13 +665,20 @@ public class BasicRobot implements Robot {
   @Override
   public void enterText(@Nonnull String text) {
     checkNotNull(text);
-    if (text.isEmpty()) {
-      return;
-    }
     for (char character : text.toCharArray()) {
       type(character);
     }
     waitForIdle(); // Wait for all the key events triggered by type to be processed
+  }
+
+  /** {@inheritDoc} */
+  @RunsInEDT
+  @Override
+  public void enterText(@Nonnull String text, @Nonnull Component c) {
+    checkNotNull(text);
+    for (char character : text.toCharArray()) {
+      type(character, c);
+    }
   }
 
   /** {@inheritDoc} */
@@ -694,6 +699,29 @@ public class BasicRobot implements Robot {
       return;
     }
     keyPressAndRelease(keyStroke.getKeyCode(), keyStroke.getModifiers());
+  }
+
+  /** {@inheritDoc} */
+  @RunsInEDT
+  @Override
+  public void type(char character, @Nonnull Component c) {
+    checkNotNull(c);
+
+    // Allow any pending robot events to complete; otherwise we might stuff the typed event before previous
+    // robot-generated events are posted.
+    waitForIdle();
+
+    if (character == '\n' || character == '\b' || character == '\t') {
+      long now = currentTimeMillis();
+      eventPoster.postEvent(c, new KeyEvent(c, KEY_PRESSED, now, 0, character, character));
+      eventPoster.postEvent(c, new KeyEvent(c, KEY_RELEASED, now, 0, character, character));
+    }
+    else {
+      eventPoster.postEvent(c, keyEventFor(c, character));
+    }
+
+    // Allow Key events to complete, otherwise text fields getText() may return an old value.
+    waitForIdle();
   }
 
   private KeyEvent keyEventFor(Component c, char character) {
