@@ -25,6 +25,8 @@ import org.fest.swing.driver.FrameDriver;
 import org.fest.swing.exception.ActionFailedException;
 import org.fest.swing.exception.ComponentLookupException;
 
+import static org.fest.util.Preconditions.checkNotNull;
+
 /**
  * Supports functional testing of {@code Frame}s.
  *
@@ -42,7 +44,7 @@ public class FrameFixture extends AbstractWindowFixture<FrameFixture, Frame, Fra
    * @see BasicRobot#robotWithCurrentAwtHierarchy()
    */
   public FrameFixture(@Nonnull Frame target) {
-    super(FrameFixture.class, target);
+    super(FrameFixture.class, checkNotNull(target));
   }
 
   /**
