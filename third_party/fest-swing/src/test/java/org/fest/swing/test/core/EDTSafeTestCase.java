@@ -16,6 +16,8 @@ package org.fest.swing.test.core;
 
 import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 /**
  * Base test case that ensures that Swing components are created and accessed in the EDT.
@@ -23,6 +25,9 @@ import org.junit.BeforeClass;
  * @author Alex Ruiz
  */
 public abstract class EDTSafeTestCase {
+  @Rule
+  public Timeout globalTimeout = Timeout.seconds(30);
+
   @BeforeClass
   public static void setUpOnce() {
     FailOnThreadViolationRepaintManager.install();
