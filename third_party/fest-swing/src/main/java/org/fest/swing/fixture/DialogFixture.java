@@ -24,6 +24,8 @@ import org.fest.swing.core.Robot;
 import org.fest.swing.driver.DialogDriver;
 import org.fest.swing.exception.ComponentLookupException;
 
+import static org.fest.util.Preconditions.checkNotNull;
+
 /**
  * Supports functional testing of {@code Dialog}s.
  *
@@ -39,7 +41,7 @@ public class DialogFixture extends AbstractWindowFixture<DialogFixture, Dialog, 
    * @see BasicRobot#robotWithCurrentAwtHierarchy()
    */
   public DialogFixture(@Nonnull Dialog target) {
-    super(DialogFixture.class, target);
+    super(DialogFixture.class, checkNotNull(target));
   }
 
   /**
