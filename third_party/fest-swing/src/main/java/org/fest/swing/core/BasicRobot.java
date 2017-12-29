@@ -62,6 +62,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -104,11 +106,6 @@ public class BasicRobot implements Robot {
   private static final ComponentMatcher POPUP_MATCHER = new TypeMatcher(JPopupMenu.class, true);
 
   private volatile boolean active;
-
-  private static final Runnable EMPTY_RUNNABLE = new Runnable() {
-    @Override
-    public void run() {}
-  };
 
   private static final int BUTTON_MASK = BUTTON1_MASK | BUTTON2_MASK | BUTTON3_MASK;
 
@@ -784,20 +781,57 @@ public class BasicRobot implements Robot {
     eventGenerator.releaseMouse(buttons);
   }
 
-  /** {@inheritDoc} */
+  /** {@inheritDoc}*/
   @RunsInEDT
   @Override
   public void waitForIdle() {
+    if (EventQueue.isDispatchThread()) {
+      throw new IllegalThreadStateException("Cannot call method from the event dispatcher thread");
+    }
     waitIfNecessary();
     Collection<EventQueue> queues = windowMonitor.allEventQueues();
-    if (queues.size() == 1) {
-      waitForIdle(checkNotNull(toolkit.getSystemEventQueue()));
-      return;
-    }
     // FIXME this resurrects dead event queues
-    for (EventQueue queue : queues) {
-      waitForIdle(checkNotNull(queue));
+    long start = currentTimeMillis();
+    int idleTimeout = settings.idleTimeout();
+    Object waitLock = new Object() {
+    };
+    AtomicInteger queuesToProcess = new AtomicInteger();  // Just a wrapper, not used as atomic.
+    AtomicBoolean nonEmptyQueues = new AtomicBoolean();  // Just a wrapper, not used as atomic.
+    do {
+      queuesToProcess.set(queues.size());
+      nonEmptyQueues.set(true);
+      for (EventQueue queue : queues) {
+        queue.postEvent(
+          new InvocationEvent(
+            toolkit,
+            () -> {
+              synchronized (waitLock) {
+                if (queuesToProcess.decrementAndGet() == 0) {
+                  // This is the the last queue.
+                  nonEmptyQueues.set(queues.stream().anyMatch(v -> v.peekEvent() != null));
+                }
+                waitLock.notifyAll();
+              }
+            }, waitLock, true));
+      }
+      synchronized (waitLock) {
+        while (currentTimeMillis() - start < idleTimeout && queuesToProcess.get() > 0) {
+          try {
+            waitLock.wait(idleTimeout - (currentTimeMillis() - start));
+          }
+          catch (InterruptedException e) {
+            break;
+          }
+        }
+      }
+      // Force a yield
+      pause();
+      if (currentTimeMillis() - start >= idleTimeout) {
+        // Silently ignore the timed out wait.
+        break;
+      }
     }
+    while (nonEmptyQueues.get());
   }
 
   private void waitIfNecessary() {
@@ -805,58 +839,6 @@ public class BasicRobot implements Robot {
     int eventPostingDelay = settings.eventPostingDelay();
     if (eventPostingDelay > delayBetweenEvents) {
       pause(eventPostingDelay - delayBetweenEvents);
-    }
-  }
-
-  private void waitForIdle(@Nonnull EventQueue eventQueue) {
-    if (EventQueue.isDispatchThread()) {
-      throw new IllegalThreadStateException("Cannot call method from the event dispatcher thread");
-    }
-    // Abbot: as of Java 1.3.1, robot.waitForIdle only waits for the last event on the queue at the time of this
-    // invocation to be processed. We need better than that. Make sure the given event queue is empty when this method
-    // returns.
-    // We always post at least one idle event to allow any current event dispatch processing to finish.
-    long start = currentTimeMillis();
-    int count = 0;
-    do {
-      // Timed out waiting for idle
-      int idleTimeout = settings.idleTimeout();
-      if (postInvocationEvent(eventQueue, idleTimeout)) {
-        break;
-      }
-      // Timed out waiting for idle event queue
-      if (currentTimeMillis() - start > idleTimeout) {
-        break;
-      }
-      ++count;
-      // Force a yield
-      pause();
-      // Abbot: this does not detect invocation events (i.e. what gets posted with EventQueue.invokeLater), so if
-      // someone is repeatedly posting one, we might get stuck. Not too worried, since if a Runnable keeps calling
-      // invokeLater on itself, *nothing* else gets much chance to run, so it seems to be a bad programming practice.
-    } while (eventQueue.peekEvent() != null);
-  }
-
-  // Indicates whether we timed out waiting for the invocation to run
-  @RunsInEDT
-  private boolean postInvocationEvent(@Nonnull EventQueue eventQueue, long timeout) {
-    Object lock = new RobotIdleLock();
-    synchronized (lock) {
-      eventQueue.postEvent(new InvocationEvent(toolkit, EMPTY_RUNNABLE, lock, true));
-      long start = currentTimeMillis();
-      try {
-        // NOTE: on fast linux systems when showing a dialog, if we don't provide a timeout, we're never notified, and
-        // the test will wait forever (up through 1.5.0_05).
-        lock.wait(timeout);
-        return (currentTimeMillis() - start) >= settings.idleTimeout();
-      } catch (InterruptedException e) {
-      }
-      return false;
-    }
-  }
-
-  private static class RobotIdleLock {
-    RobotIdleLock() {
     }
   }
 
